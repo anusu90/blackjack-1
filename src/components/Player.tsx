@@ -105,7 +105,7 @@ export const PlayerComponent = ({ player, isCurrentPlayersTurn }: Props) => {
                 key={player.id}
                 style={{
                   //@ts-expect-error This comes from daisyUI directly.
-                  "--value": (count * 100) / MAX_TIME ?? 0,
+                  "--value": (count * 100) / MAX_TIME || 0,
                   "--size": "50px",
                 }}
                 role="progressbar"
