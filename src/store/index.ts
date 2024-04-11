@@ -102,7 +102,6 @@ export const useGameStore = create(
           player.score += getCardPointFromValue(drawnCard.value);
         });
         set({ players: updatedPlayers, drawnCard: null });
-        get().goToNextPlayer();
       },
 
       markPlayerSkipped: (playerId) => {
@@ -113,7 +112,6 @@ export const useGameStore = create(
           player.skipped = true;
         });
         set({ players: updatedPlayers });
-        get().goToNextPlayer();
       },
 
       endGame: () => {

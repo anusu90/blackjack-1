@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useGameStore } from "../store";
 import { Player } from "../types";
 import { useCountdown } from "../hooks/useCountdown";
@@ -17,7 +17,7 @@ export const PlayerComponent = ({ player, isCurrentPlayersTurn }: Props) => {
   const isGameOver = useGameStore((store) => store.isGameOver);
   const goToNextPlayer = useGameStore((store) => store.goToNextPlayer);
 
-  const MAX_TIME = 10;
+  const MAX_TIME = 30;
 
   const [count, { startCountdown, stopCountdown, resetCountdown }] =
     useCountdown({ startingNumber: MAX_TIME });
@@ -26,12 +26,15 @@ export const PlayerComponent = ({ player, isCurrentPlayersTurn }: Props) => {
     drawCard(id);
   };
 
-  const handleAcceptDrawnCard = () => {
+  const handleAcceptDrawnCard = useCallback(() => {
     addCardToPlayer(id);
-  };
-  const handleSkip = () => {
+    goToNextPlayer();
+  }, [addCardToPlayer, goToNextPlayer, id]);
+
+  const handleSkip = useCallback(() => {
     skipPlayer(id);
-  };
+    goToNextPlayer();
+  }, [goToNextPlayer, id, skipPlayer]);
 
   useEffect(() => {
     if (isCurrentPlayersTurn && !isGameOver && !skipped) {
@@ -66,56 +69,55 @@ export const PlayerComponent = ({ player, isCurrentPlayersTurn }: Props) => {
   useEffect(() => {
     if (score > 21) {
       skipPlayer(id);
-      goToNextPlayer();
     }
-  }, [goToNextPlayer, id, score, skipPlayer]);
+  }, [skipPlayer, id, score]);
 
   return (
     <div
-      className="w-80 bg-base-100 shadow-xl h-[500px] rounded-xl flex flex-col p-2 justify-between"
+      className="w-80 bg-base-100 shadow-xl h-[400px] rounded-xl flex flex-col p-2 justify-between"
       key={id}
     >
       <div>
         <h6>{player.name}</h6>
-      </div>
-      <div className="flex">
-        <div className="grow relative">
-          {cards.map((card, index) => (
-            <div>
-              <div
-                className="bg-base-100 rounded-lg absolute w-32"
-                style={{
-                  top: `${index * 30}px`,
-                }}
-              >
-                <img src={card.image} alt={card.code} />
+        <div className="flex mt-0.5">
+          <div className="grow relative">
+            {cards.map((card, index) => (
+              <div>
+                <div
+                  className="bg-base-100 rounded-lg absolute w-32"
+                  style={{
+                    top: `${index * 30}px`,
+                  }}
+                >
+                  <img src={card.image} alt={card.code} />
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex flex-col items-end">
-          <div className="stats shadow">
-            <div className="stat place-items-center">
-              <div className="stat-title">Score</div>
-              <div className="stat-value">{score}</div>
-            </div>
+            ))}
           </div>
-          <div className="pr-4">
-            {!isGameOver && isCurrentPlayersTurn && !skipped && (
-              <div
-                className="radial-progress text-primary"
-                key={player.id}
-                style={{
-                  //@ts-expect-error This comes from daisyUI directly.
-                  "--value": (count * 100) / MAX_TIME || 0,
-                  "--size": "50px",
-                }}
-                role="progressbar"
-              >
-                {count}s
+
+          <div className="flex flex-col items-end">
+            <div className="stats shadow">
+              <div className="stat place-items-center">
+                <div className="stat-title">Score</div>
+                <div className="stat-value">{score}</div>
               </div>
-            )}
+            </div>
+            <div className="pr-4">
+              {!isGameOver && isCurrentPlayersTurn && !skipped && (
+                <div
+                  className="radial-progress text-primary"
+                  key={player.id}
+                  style={{
+                    //@ts-expect-error This comes from daisyUI directly.
+                    "--value": (count * 100) / MAX_TIME || 0,
+                    "--size": "50px",
+                  }}
+                  role="progressbar"
+                >
+                  {count}s
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

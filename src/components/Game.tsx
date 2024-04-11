@@ -35,8 +35,8 @@ export const Game = () => {
 
   return (
     <div className="flex grid-cols-12 gap-1 w-full">
-      <div className="">
-        <div className="card w-96 bg-primary text-primary-content h-full">
+      <div>
+        <div className="card w-96 bg-primary text-primary-content h-[400px]">
           <div className="card-body flex flex-col justify-between">
             <h2 className="card-title">Blackjack</h2>
             <div>
@@ -51,7 +51,7 @@ export const Game = () => {
                 <h1 className="text-4xl text-center">
                   Drawn Card will appear here
                   {loading && (
-                    <span className="loading loading-spinner loading-lg"></span>
+                    <span className="ml-1 loading loading-spinner loading-sm"></span>
                   )}
                 </h1>
               )}
@@ -64,7 +64,7 @@ export const Game = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-10 flex gap-2">
+      <div className="col-span-10 flex gap-2 flex-wrap">
         {players.map((player, idx) => (
           <PlayerComponent
             player={player}

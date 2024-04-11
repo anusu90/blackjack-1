@@ -8,6 +8,7 @@ export const NewGame = () => {
   return (
     <div className="p-2 flex flex-col gap-2 w-96">
       <h1 className="text-2xl text-black">Blackjack</h1>
+      <h4>(For 2 - 8 players)</h4>
       <div className="flex flex-col gap-1">
         <input
           type="number"
@@ -20,7 +21,7 @@ export const NewGame = () => {
       <button
         className="btn btn-primary"
         onClick={() => {
-          if (playerCount < 2) return;
+          if (playerCount < 2 || playerCount > 8) return;
           startNewGame(playerCount);
         }}
       >
