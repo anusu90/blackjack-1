@@ -6,10 +6,15 @@ export const EndGameComponent = () => {
   const winners = findHighestScorePlayer(players);
 
   const winnersNames = winners.map((winner) => winner.name).join(", ");
+  const isTie = winners.length > 1;
 
   return (
     <div>
-      <h1 className="text-3xl text-black">{winnersNames} wins!</h1>
+      <h1 className="text-3xl text-black">
+        {isTie
+          ? `It's a tie between ${winnersNames}`
+          : `${winnersNames} won the game!`}
+      </h1>
     </div>
   );
 };

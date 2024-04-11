@@ -4,6 +4,7 @@ import { useGameStore } from "../store";
 export const NewGame = () => {
   const [playerCount, setPlayerCount] = useState(0);
   const startNewGame = useGameStore((store) => store.startNewGame);
+  const loading = useGameStore((store) => store.loading);
   return (
     <div className="p-2 flex flex-col gap-2 w-96">
       <h1 className="text-2xl text-black">Blackjack</h1>
@@ -23,7 +24,10 @@ export const NewGame = () => {
           startNewGame(playerCount);
         }}
       >
-        Start Game
+        Start Game{" "}
+        {loading && (
+          <span className="loading  loading-spinner loading-sm"></span>
+        )}
       </button>
     </div>
   );

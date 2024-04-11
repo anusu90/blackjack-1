@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useGameStore } from "../store";
 import { PlayerComponent } from "./Player";
+import { findHighestScorePlayer } from "../utils";
 
 export const Game = () => {
   const players = useGameStore((store) => store.players);
@@ -8,8 +9,23 @@ export const Game = () => {
   const drawnCard = useGameStore((store) => store.drawnCard);
   const endGame = useGameStore((store) => store.endGame);
   const restartGame = useGameStore((store) => store.restartGame);
+  const loading = useGameStore((store) => store.loading);
 
+  // No remaining player.
   const isAllPlayersSkipped = players.every((player) => player.skipped);
+
+  const activePlayers = players.filter((player) => !player.skipped);
+  const highestScorePlayers = findHighestScorePlayer(players);
+
+  useEffect(() => {
+    if (activePlayers.length === 1 && highestScorePlayers.length === 1) {
+      const [highestPlayer] = highestScorePlayers;
+      const [onlyPlayer] = activePlayers;
+      if (highestPlayer.id === onlyPlayer.id) {
+        endGame();
+      }
+    }
+  }, [highestScorePlayers, activePlayers, endGame]);
 
   useEffect(() => {
     if (isAllPlayersSkipped) {
@@ -34,6 +50,9 @@ export const Game = () => {
               ) : (
                 <h1 className="text-4xl text-center">
                   Drawn Card will appear here
+                  {loading && (
+                    <span className="loading loading-spinner loading-lg"></span>
+                  )}
                 </h1>
               )}
             </div>

@@ -75,6 +75,9 @@ export const PlayerComponent = ({ player, isCurrentPlayersTurn }: Props) => {
       className="w-80 bg-base-100 shadow-xl h-[500px] rounded-xl flex flex-col p-2 justify-between"
       key={id}
     >
+      <div>
+        <h6>{player.name}</h6>
+      </div>
       <div className="flex">
         <div className="grow relative">
           {cards.map((card, index) => (
