@@ -1,30 +1,16 @@
-# React + TypeScript + Vite
+# GAME OF BLACK JACK
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Rules of the Game
 
-Currently, two official plugins are available:
+1. The goal of Blackjack is to beat the dealer's hand without going over 21.
+2. The value of cards 2 through 10 is their pip value. Face cards (Jack, Queen, and King) are worth 10, and Aces are worth either 11.
+3. Players can request additional cards (hit) or keep their current total (skip).
+4. If a player's total exceeds 21, they bust and lose the game.
+5. After all players have finished their turns, the player with highest points and less than 21 win the game.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Implementation Details
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- The game is implemented using ReactJS.
+- Tailwind is used for styling
+- Zustand is used for state-management.
+- Axios is used for fetching data.
